@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+#[Route("/api")]
 class CustomerController extends AbstractController
 {
     public function __construct(private CustomerRepository $customerRepository, private EntityManagerInterface $manager) {}
