@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -16,18 +17,23 @@ class Product
     private $id;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Groups("product:read")]
     private $marque;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Groups("product:read")]
     private $model;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Groups("product:read")]
     private $size;
 
     #[ORM\ManyToMany(targetEntity: Color::class, inversedBy: 'products')]
+    #[Groups("product:read")]
     private $colors;
 
     #[ORM\ManyToMany(targetEntity: Storage::class, inversedBy: 'products')]
+    #[Groups("product:read")]
     private $storages;
 
     public function __construct()
