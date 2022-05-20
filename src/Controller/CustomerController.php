@@ -113,11 +113,15 @@ class CustomerController extends AbstractController
     }
 
     #[Route('/customers/{id}', name: 'customer_delete', methods: ["DELETE"])]
-    public function delete($id)
+    public function delete($id, Request $request)
     {
 
         $customer = $this->customerRepository->find($id);
         if (!$customer) { return $this->json(["No client found"], 400);}
+
+        //Check if right user
+        $user = $this->getUserByToken($request);
+        if($user != $customer->getUser()) { return $this->json(["Wrong authorization"], 403); }
 
         try {
             $this->manager->remove($customer);
@@ -140,7 +144,7 @@ class CustomerController extends AbstractController
         //FORMAT JWT TOKEN TO OBJ
         $tks = explode('.', $token);
         if (count($tks) != 3) {
-            return null;
+            return $this->json("JWT Auth failed", 401);
         }
         list($headb64, $bodyb64, $cryptob64) = $tks;
         $input=$bodyb64;
@@ -156,8 +160,7 @@ class CustomerController extends AbstractController
         $user = $this->userRepository->findOneBy(['email' => $obj->email]);
 
         if ($user) { return $user; }
-        return $this->json("JWT Auth failed", 400);
-
+        return $this->json("JWT Auth failed", 401);
     }
 
 }
