@@ -24,7 +24,7 @@ class ProductController extends AbstractController
     public function show($id): JsonResponse
     {
         $product = $this->productRepository->find($id);
-        if (!$product) { return $this->json(["No product found"], 400);}
+        if (!$product) { return $this->json(["No product found"], 404);}
 
         return $this->json($product, 200, [], ['groups' => 'product:read']);
     }
