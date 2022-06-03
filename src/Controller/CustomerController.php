@@ -102,7 +102,7 @@ class CustomerController extends AbstractController
 
             $this->manager->flush();
 
-            return $this->json($customer, 201, [], ['groups' => 'customer:read']);
+            return $this->json($customer, 200, [], ['groups' => 'customer:read']);
 
         } catch (NotEncodableValueException $e) {
             return $this->json([
@@ -126,7 +126,7 @@ class CustomerController extends AbstractController
         try {
             $this->manager->remove($customer);
             $this->manager->flush();
-            return $this->json(["success"], 201, [], ['groups' => 'customer:read']);
+            return $this->json(["success"], 204, [], ['groups' => 'customer:read']);
         } catch (NotEncodableValueException $e) {
             return $this->json([
                 'status' => 400,
