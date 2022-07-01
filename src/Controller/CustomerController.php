@@ -33,7 +33,7 @@ class CustomerController extends AbstractController
     public function show($id, Request $request): JsonResponse
     {
         $customer = $this->customerRepository->find($id);
-        if (!$customer) { return $this->json(["No client found"], 400);}
+        if (!$customer) { return $this->json(["No client found"], 404);}
 
         //Check if right user
         $user = $this->getUserByToken($request);
@@ -78,7 +78,7 @@ class CustomerController extends AbstractController
 
         //Check if customer
         $customer = $this->customerRepository->find($id);
-        if (!$customer) { return $this->json(["No client found"], 400);}
+        if (!$customer) { return $this->json(["No client found"], 404);}
 
         //Check if right user
         $user = $this->getUserByToken($request);
@@ -117,7 +117,7 @@ class CustomerController extends AbstractController
     {
 
         $customer = $this->customerRepository->find($id);
-        if (!$customer) { return $this->json(["No client found"], 400);}
+        if (!$customer) { return $this->json(["No client found"], 404);}
 
         //Check if right user
         $user = $this->getUserByToken($request);
